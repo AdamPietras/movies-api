@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CastingServiceImpl implements CastingService {
@@ -28,21 +29,21 @@ public class CastingServiceImpl implements CastingService {
 
     @Override
     public List<Casting> findAll() {
-        return null;
+        return castingRepository.findAll();
     }
 
     @Override
-    public Casting findById(int id) {
-        return null;
+    public Casting findById(int id) throws Exception {
+        return castingRepository.findById(id).orElseThrow(()-> new Exception("Casting with id " + castingRepository.findById(id) + "not found"));
     }
 
     @Override
-    public void save(Casting casting) throws Exception {
-
+    public void save(Casting casting){
+        castingRepository.save(casting);
     }
 
     @Override
     public void deleteById(int id) {
-
+        castingRepository.deleteById(id);
     }
 }

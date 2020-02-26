@@ -39,19 +39,12 @@ public class MovieServiceImpl implements MovieService {
         return movieRepository.findAll();
     }
     @Override
-    public Movie findById(int id){
-        Optional<Movie> result = movieRepository.findById(id);
-        Movie movie = null;
-        if (result.isPresent())
-            movie = result.get();
-        else
-            throw new RuntimeException("Did not find movie with id" + id);
-        return movie;
+    public Movie findById(int id) throws Exception {
+        return movieRepository.findById(id).orElseThrow(()->new Exception("Movie with id" + id + "not found"));
     }
 
     @Override
     public void save(Movie movie) throws Exception {
-        //Just for tests
 
         Director director = directorRepository.findByDirectorName(movie.getDirector().getDirectorName()).orElseThrow(() -> new Exception("Director with name "+ movie.getDirector().getDirectorName() + " NOT found"));
         movie.setDirector(director);
