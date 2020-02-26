@@ -27,7 +27,7 @@ public class MoviesRestController {
     }
     //GET (movie by id)
     @GetMapping("/movies/{movieId}")
-    public Movie getMovie(@PathVariable int movieId){
+    public Movie getMovie(@PathVariable int movieId) throws Exception {
         return movieService.findById(movieId);
     }
 
@@ -47,7 +47,7 @@ public class MoviesRestController {
     }
     //DELETE
     @DeleteMapping("/movies/{movieId}")
-    public String deleteMovie(@PathVariable int id){
+    public String deleteMovie(@PathVariable int id) throws Exception {
         Optional<Movie> tempMovie = Optional.ofNullable(movieService.findById(id));
         if (!(tempMovie.isPresent())){
             throw new RuntimeException("There is no movie like that");
