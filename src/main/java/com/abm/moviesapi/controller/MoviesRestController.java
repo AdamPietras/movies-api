@@ -2,6 +2,7 @@ package com.abm.moviesapi.controller;
 
 import com.abm.moviesapi.entity.Movie;
 import com.abm.moviesapi.service.MovieService;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

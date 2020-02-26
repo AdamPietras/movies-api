@@ -1,6 +1,7 @@
 package com.abm.moviesapi.service;
 
 import com.abm.moviesapi.entity.Genre;
+import com.abm.moviesapi.entity.Movie;
 import com.abm.moviesapi.repository.CastingRepository;
 import com.abm.moviesapi.repository.DirectorRepository;
 import com.abm.moviesapi.repository.GenreRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GenreServiceImpl implements GenreService {
@@ -28,21 +30,27 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public List<Genre> findAll() {
-        return null;
+        return genreRepository.findAll();
     }
 
     @Override
     public Genre findById(int id) {
-        return null;
+        Optional<Genre> result = genreRepository.findById(id);
+        Genre genre = null;
+        if (result.isPresent())
+            genre = result.get();
+        else
+            throw new RuntimeException("Did not find genre with id" + id);
+        return genre;
     }
 
     @Override
     public void save(Genre genre) throws Exception {
-
+//TODO
     }
 
     @Override
     public void deleteById(int id) {
-
+        genreRepository.deleteById(id);
     }
 }
