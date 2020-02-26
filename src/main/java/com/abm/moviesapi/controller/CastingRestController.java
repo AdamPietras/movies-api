@@ -1,7 +1,10 @@
 package com.abm.moviesapi.controller;
 
+import com.abm.moviesapi.dto.CastingDTO;
 import com.abm.moviesapi.entity.Casting;
 import com.abm.moviesapi.service.CastingService;
+import com.abm.moviesapi.service.MovieService;
+import com.abm.moviesapi.service.MovieServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +26,11 @@ public class CastingRestController {
     }
 
     @GetMapping("/casting/{castingId}")
-    public Casting getCasting(@PathVariable int castingId) throws Exception {
-        return castingService.findById(castingId);
+    public CastingDTO getCasting(@PathVariable int castingId) throws Exception {
+
+        Casting casting = castingService.findById(castingId);
+        CastingDTO castingDTO = new CastingDTO(casting.getId(), casting.getActorName(), castingService.getMoviesByCasting(castingId));
+        return castingDTO;
     }
 
     @PostMapping(value = "/casting", consumes = MediaType.APPLICATION_JSON_VALUE)

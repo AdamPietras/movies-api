@@ -28,12 +28,12 @@ public class DirectorServiceImpl implements DirectorService {
 
     @Override
     public List<Director> findAll() {
-        return null;
+        return directorRepository.findAll();
     }
 
     @Override
-    public Director findById(int id) {
-        return null;
+    public Director findById(int id) throws Exception {
+        return directorRepository.findById(id).orElseThrow(()->new Exception("Director with id" + id + "not found"));
     }
 
     @Override

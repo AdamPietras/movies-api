@@ -10,4 +10,6 @@ public interface CastingService {
     public Casting findById(int id) throws Exception;
     public void save(Casting casting);
     public void deleteById(int id);
+
+    List<String> getMoviesByCasting(int castingId);
 }

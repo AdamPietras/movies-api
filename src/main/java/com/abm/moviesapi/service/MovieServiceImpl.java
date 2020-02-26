@@ -9,13 +9,12 @@ import com.abm.moviesapi.repository.DirectorRepository;
 import com.abm.moviesapi.repository.GenreRepository;
 import com.abm.moviesapi.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -69,4 +68,6 @@ public class MovieServiceImpl implements MovieService {
     public void deleteById(int id) {
         movieRepository.deleteById(id);
     }
+
+
 }
