@@ -2,8 +2,8 @@ package com.abm.moviesapi.controller;
 
 import com.abm.moviesapi.entity.Movie;
 import com.abm.moviesapi.service.MovieService;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,13 +46,14 @@ public class MoviesRestController {
         return movie;
     }
     //DELETE
-    @DeleteMapping("/movies/{movieId}")
-    public String deleteMovie(@PathVariable int id) throws Exception {
+    @DeleteMapping("/movies/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public HttpStatus deleteMovie(@PathVariable int id) throws Exception {
         Optional<Movie> tempMovie = Optional.ofNullable(movieService.findById(id));
         if (!(tempMovie.isPresent())){
             throw new RuntimeException("There is no movie like that");
         }
         movieService.deleteById(id);
-        return "Deleted movie id - " + id;
+        return HttpStatus.NO_CONTENT;
     }
 }
