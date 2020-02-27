@@ -8,7 +8,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class MoviesRestController {
@@ -49,10 +48,6 @@ public class MoviesRestController {
     @DeleteMapping("/movies/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public HttpStatus deleteMovie(@PathVariable int id){
-        Optional<Movie> tempMovie = Optional.ofNullable(movieService.findById(id));
-        if (!(tempMovie.isPresent())){
-            throw new RuntimeException("There is no movie like that");
-        }
         movieService.deleteById(id);
         return HttpStatus.NO_CONTENT;
     }

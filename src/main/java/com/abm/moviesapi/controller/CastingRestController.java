@@ -3,9 +3,8 @@ package com.abm.moviesapi.controller;
 import com.abm.moviesapi.dto.CastingDTO;
 import com.abm.moviesapi.entity.Casting;
 import com.abm.moviesapi.service.CastingService;
-import com.abm.moviesapi.service.MovieService;
-import com.abm.moviesapi.service.MovieServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,9 +45,10 @@ public class CastingRestController {
         return casting;
     }
 
-    @DeleteMapping("/casting/{castingId}")
-    public String deleteCasting(@PathVariable int castingId) throws Exception {
-        Casting casting = castingService.findById(castingId);
-        return "Deleted casting id- " + castingId;
+    @DeleteMapping("/casting/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public HttpStatus deleteCasting(@PathVariable int id) {
+        castingService.deleteById(id);
+        return HttpStatus.NO_CONTENT;
     }
 }

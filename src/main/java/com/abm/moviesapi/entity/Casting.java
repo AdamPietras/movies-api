@@ -14,6 +14,14 @@ public class Casting {
 
     private String actorName;
 
+    public Casting() {
+    }
+
+    public Casting(int id, String actorName){
+        this.id = id;
+        this.actorName = actorName;
+    }
+
     public int getId() {
         return id;
     }
@@ -28,8 +36,5 @@ public class Casting {
 
     public void setActorName(String actorName) {
         this.actorName = actorName;
-    }
-
-    public Casting() {
     }
 }

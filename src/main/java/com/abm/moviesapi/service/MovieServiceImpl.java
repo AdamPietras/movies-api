@@ -4,6 +4,7 @@ import com.abm.moviesapi.entity.Casting;
 import com.abm.moviesapi.entity.Director;
 import com.abm.moviesapi.entity.Genre;
 import com.abm.moviesapi.entity.Movie;
+import com.abm.moviesapi.exceptions.CustomCastingException.CastingNotFoundException;
 import com.abm.moviesapi.exceptions.CustomMovieException.MovieNotFoundException;
 import com.abm.moviesapi.repository.CastingRepository;
 import com.abm.moviesapi.repository.DirectorRepository;
@@ -61,7 +62,7 @@ public class MovieServiceImpl implements MovieService {
 
             List<Casting> castings = new ArrayList<>();
             for (Casting casting : movie.getCastings()) {
-                castings.add(castingRepository.findByActorName(casting.getActorName()).orElseThrow(() -> new Exception("Casting with name " + casting.getActorName() + " NOT found")));
+                castings.add(castingRepository.findByActorName(casting.getActorName()).orElseThrow(() -> new CastingNotFoundException("Casting with name " + casting.getActorName() + " NOT found")));
             }
             movie.setCastings(castings);
 
@@ -75,6 +76,4 @@ public class MovieServiceImpl implements MovieService {
     public void deleteById(int id) throws MovieNotFoundException {
         movieRepository.deleteById(id);
     }
-
-
 }
