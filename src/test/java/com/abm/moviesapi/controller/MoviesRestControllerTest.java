@@ -86,5 +86,18 @@ class MoviesRestControllerTest {
 
     @Test
     void deleteMovie() {
+        try {
+            BDDMockito.given(movieService.findById(ArgumentMatchers.anyInt()))
+                    .willReturn(new Movie(2, "New York Doll", 2005));
+
+            mockMvc.perform(MockMvcRequestBuilders
+            .delete("/movies/2")
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNoContent());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+    //sprawdzic usuwanie filmu którego nie ma (czy rzuci 500)
 }
