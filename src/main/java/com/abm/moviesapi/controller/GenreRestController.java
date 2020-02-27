@@ -24,14 +24,15 @@ public class GenreRestController {
         this.genreService = genreService;
     }
 
-    //GET (all movies)
+    //GET (all genres)
     @GetMapping("/genres")
     public List<Genre> findAll(){
         return genreService.findAll();
     }
 
+    //GET (all movies for genre id)
     @GetMapping("/genres/{genreId}")
-    public GenreDTO getCasting(@PathVariable int genreId) throws Exception {
+    public GenreDTO getGenre(@PathVariable int genreId) throws Exception {
 
         Genre genre = genreService.findById(genreId);
         GenreDTO genreDTO = new GenreDTO(genre.getId(), genre.getName(), genreService.getMoviesByGenre(genreId));
