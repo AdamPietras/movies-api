@@ -41,7 +41,7 @@ public class CastingServiceImpl implements CastingService {
 
     @Override
     public Casting findById(int id) throws CastingNotFoundException {
-        return castingRepository.findById(id).orElseThrow(()-> new CastingNotFoundException("Casting with id " + castingRepository.findById(id) + "not found"));
+        return castingRepository.findById(id).orElseThrow(()-> new CastingNotFoundException("Casting with id " + castingRepository.findById(id) + " not found"));
     }
 
     @Override
@@ -51,7 +51,7 @@ public class CastingServiceImpl implements CastingService {
 
     @Override
     public void deleteById(int id) throws CastingNotFoundException {
-        Casting casting = castingRepository.findById(id).orElseThrow(()-> new CastingNotFoundException("Casting with id " + id + "not found"));
+        Casting casting = castingRepository.findById(id).orElseThrow(()-> new CastingNotFoundException("Casting with id " + id + " not found"));
         castingRepository.deleteById(casting.getId());
     }
 

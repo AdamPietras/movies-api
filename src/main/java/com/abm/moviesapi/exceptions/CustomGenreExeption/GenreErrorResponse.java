@@ -5,10 +5,6 @@ public class GenreErrorResponse {
     private String message;
     private long timeStamp;
 
-    public GenreErrorResponse(){
-
-    }
-
     public GenreErrorResponse(int status, String message, long timeStamp) {
         this.status = status;
         this.message = message;
