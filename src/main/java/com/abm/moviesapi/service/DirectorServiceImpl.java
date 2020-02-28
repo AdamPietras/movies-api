@@ -38,11 +38,11 @@ public class DirectorServiceImpl implements DirectorService {
 
     @Override
     public void save(Director director) throws Exception {
-
+        directorRepository.save(director);
     }
 
     @Override
     public void deleteById(int id) {
-
+        directorRepository.deleteById(id);
     }
 }

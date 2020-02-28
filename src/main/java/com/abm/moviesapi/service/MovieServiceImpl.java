@@ -42,17 +42,13 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Movie findById(int id) {
         Movie movie = null;
-        try {
-            movie = movieRepository.findById(id).orElseThrow(()->new MovieNotFoundException("Movie with id" + id + "not found"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        movie = movieRepository.findById(id).orElseThrow(()->new MovieNotFoundException("Movie with id" + id + "not found"));
         return movie;
     }
 
     @Override
-    public void save(Movie movie) throws Exception {
-            Director director = directorRepository.findByDirectorName(movie.getDirector().getDirectorName()).orElseThrow(() -> new Exception("Director with name " + movie.getDirector().getDirectorName() + " NOT found"));
+    public void save(Movie movie) {
+            Director director = directorRepository.findByDirectorName(movie.getDirector().getDirectorName()).orElseThrow(() -> new DirectorNotFoundException("Director with name " + movie.getDirector().getDirectorName() + " NOT found"));
             movie.setDirector(director);
 
             List<Genre> genres = new ArrayList<>();
