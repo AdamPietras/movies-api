@@ -5,6 +5,7 @@ import com.abm.moviesapi.entity.Director;
 import com.abm.moviesapi.entity.Genre;
 import com.abm.moviesapi.entity.Movie;
 import com.abm.moviesapi.exceptions.CustomCastingException.CastingNotFoundException;
+import com.abm.moviesapi.exceptions.CustomGenreExeption.GenreNotFoundException;
 import com.abm.moviesapi.exceptions.CustomMovieException.MovieNotFoundException;
 import com.abm.moviesapi.repository.CastingRepository;
 import com.abm.moviesapi.repository.DirectorRepository;
@@ -56,13 +57,13 @@ public class MovieServiceImpl implements MovieService {
 
             List<Genre> genres = new ArrayList<>();
             for (Genre genre : movie.getGenres()) {
-                genres.add(genreRepository.findGenreByName(genre.getName()).orElseThrow(() -> new Exception("Genre with name " + movie.getGenres().toString() + " NOT found")));
+                genres.add(genreRepository.findGenreByName(genre.getName()).orElseThrow(() -> new GenreNotFoundException("Genre with name " + movie.getGenres().toString() + " NOT found")));
             }
             movie.setGenres(genres);
 
             List<Casting> castings = new ArrayList<>();
             for (Casting casting : movie.getCastings()) {
-                castings.add(castingRepository.findByActorName(casting.getActorName()).orElseThrow(() -> new CastingNotFoundException("Casting with name " + casting.getActorName() + " NOT found")));
+                castings.add(castingRepository.findByActorName(casting.getActorName()).orElseThrow(() -> new CastingNotFoundException("Casting with name " + movie.getCastings().toString() + " NOT found")));
             }
             movie.setCastings(castings);
 
