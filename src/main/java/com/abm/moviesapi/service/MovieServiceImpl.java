@@ -42,47 +42,33 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Movie findById(int id) {
         Movie movie = null;
-        movie = movieRepository.findById(id).orElseThrow(()->new MovieNotFoundException("Movie with id" + id + "not found"));
+        try {
+            movie = movieRepository.findById(id).orElseThrow(()->new MovieNotFoundException("Movie with id" + id + "not found"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return movie;
     }
 
     @Override
-    public void save(Movie movie) throws DirectorNotFoundException, GenreNotFoundException, CastingNotFoundException, MovieNotFoundException {
-        Director director = directorRepository.findByDirectorName(movie.getDirector().getDirectorName()).orElseThrow(() -> new DirectorNotFoundException("Director with name " + movie.getDirector().getDirectorName() + " NOT found"));
-        movie.setDirector(director);
+    public void save(Movie movie) throws Exception {
+            Director director = directorRepository.findByDirectorName(movie.getDirector().getDirectorName()).orElseThrow(() -> new Exception("Director with name " + movie.getDirector().getDirectorName() + " NOT found"));
+            movie.setDirector(director);
 
-        List<Genre> genres = new ArrayList<>();
-        for (Genre genre : movie.getGenres()) {
-            genres.add(genreRepository.findGenreByName(genre.getName()).orElseThrow(() -> new GenreNotFoundException("Genre with name " + movie.getGenres().toString() + " NOT found")));
-        }
-        movie.setGenres(genres);
+            List<Genre> genres = new ArrayList<>();
+            for (Genre genre : movie.getGenres()) {
+                genres.add(genreRepository.findGenreByName(genre.getName()).orElseThrow(() -> new GenreNotFoundException("Genre with name " + movie.getGenres().toString() + " NOT found")));
+            }
+            movie.setGenres(genres);
 
-        List<Casting> castings = new ArrayList<>();
-        for (Casting casting : movie.getCastings()) {
-            castings.add(castingRepository.findByActorName(casting.getActorName()).orElseThrow(() -> new CastingNotFoundException("Casting with name " + movie.getCastings().toString() + " NOT found")));
-        }
-        movie.setCastings(castings);
+            List<Casting> castings = new ArrayList<>();
+            for (Casting casting : movie.getCastings()) {
+                castings.add(castingRepository.findByActorName(casting.getActorName()).orElseThrow(() -> new CastingNotFoundException("Casting with name " + movie.getCastings().toString() + " NOT found")));
+            }
+            movie.setCastings(castings);
 
-        movieRepository.save(movie);
+            movieRepository.save(movie);
     }
-//    public Optional<Director> findDirectorForMovie(Movie movie){
-//        Optional<Director> director = directorRepository.findByDirectorName(movie.getDirector().getDirectorName());
-//        return director;
-//    }
-//    public Optional<List<Genre>> findGenreForMovie(Movie movie){
-//        Optional<List<Genre>> genres = Optional.of(new ArrayList<>());
-//        for (Genre genre : movie.getGenres()) {
-//            genres.add(genreRepository.findGenreByName(genre.getName()));
-//        }
-//        return genres;
-//    }
-//    public List<Optional<Casting>> findCastingForMovie(Movie movie){
-//        List<Optional<Casting>> castings = new ArrayList<>();
-//        for (Casting casting : movie.getCastings()) {
-//            castings.add(castingRepository.findByActorName(casting.getActorName()));
-//        }
-//        return castings;
-//    }
 
     @Override
     public void deleteById(int id) throws MovieNotFoundException {
