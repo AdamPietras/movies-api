@@ -33,15 +33,23 @@ public class MoviesRestController {
     //POST - add new one
     @PostMapping(value = "/movies", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Movie addMovie(@RequestBody Movie movie){
-        movie.setId(0); // if it isn't here spring will be trying to update element
-        movieService.save(movie);
+        try {
+            movie.setId(0); // if it isn't here spring will be trying to update element
+            movieService.save(movie);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return movie;
     }
 
     //PUT update existing one
     @PutMapping("/movies")
     public Movie updateMovie(@RequestBody Movie movie){
-        movieService.save(movie);
+        try {
+            movieService.save(movie);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return movie;
     }
     //DELETE
