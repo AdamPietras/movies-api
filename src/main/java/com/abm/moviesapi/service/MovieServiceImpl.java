@@ -50,8 +50,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public void save(Movie movie) throws MovieNotFoundException {
-        try {
+    public void save(Movie movie) throws Exception {
             Director director = directorRepository.findByDirectorName(movie.getDirector().getDirectorName()).orElseThrow(() -> new Exception("Director with name " + movie.getDirector().getDirectorName() + " NOT found"));
             movie.setDirector(director);
 
@@ -68,9 +67,6 @@ public class MovieServiceImpl implements MovieService {
             movie.setCastings(castings);
 
             movieRepository.save(movie);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
     @Override
