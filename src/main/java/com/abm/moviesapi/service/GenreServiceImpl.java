@@ -43,17 +43,17 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public Genre findById(int id) {
+    public Genre findById(int id) throws GenreNotFoundException {
         return genreRepository.findById(id).orElseThrow(()-> new GenreNotFoundException("Genre with id " + id + " not found"));
     }
 
     @Override
     public void save(Genre genre) throws Exception {
-//TODO
+        genreRepository.save(genre);
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(int id) throws GenreNotFoundException{
         Genre genre = genreRepository.findById(id).orElseThrow(()-> new GenreNotFoundException("Genre with id " + id + " not found"));
         genreRepository.deleteById(genre.getId());
     }

@@ -55,8 +55,8 @@ public class DirectorRestController {
     //DELETE (delete Director)
     @DeleteMapping("/directors/{directorId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public HttpStatus deleteDirector(@PathVariable int id) throws Exception {
-        directorService.deleteById(id);
+    public HttpStatus deleteDirector(@PathVariable int directorId) throws Exception {
+        directorService.deleteById(directorId);
         return HttpStatus.NO_CONTENT;
     }
 }
