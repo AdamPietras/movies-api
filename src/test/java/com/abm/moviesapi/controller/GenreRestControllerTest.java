@@ -2,8 +2,12 @@ package com.abm.moviesapi.controller;
 
 import com.abm.moviesapi.dto.GenreDTO;
 import com.abm.moviesapi.entity.Genre;
+import com.abm.moviesapi.entity.Movie;
+import com.abm.moviesapi.exceptions.CustomGenreExeption.GenreNotFoundException;
+import com.abm.moviesapi.exceptions.CustomMovieException.MovieNotFoundException;
 import com.abm.moviesapi.service.GenreService;
 import com.abm.moviesapi.service.MovieService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +16,7 @@ import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -24,6 +29,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(GenreRestController.class)
@@ -37,7 +44,7 @@ class GenreRestControllerTest {
     GenreService genreService;
 
     @Test
-    void findAll() {
+    void testingIfFindAllGenres() {
         try {
             Genre genre = new Genre(1 ,"Comedy");
             Genre genre2 = new Genre(2,"Horror");
@@ -64,7 +71,7 @@ class GenreRestControllerTest {
     }
 
     @Test
-    void getGenre() {
+    void testingIfGetGenreByItId() {
         try {
             List<String> titles = Arrays.asList("one", "two", "three");
 
@@ -78,10 +85,44 @@ class GenreRestControllerTest {
                     .andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
                     .andExpect(MockMvcResultMatchers.jsonPath("genreName").value("Comedy"))
                     .andExpect(MockMvcResultMatchers.jsonPath("titles").isArray())
-                    .andExpect(MockMvcResultMatchers.jsonPath("titles", Matchers.containsInAnyOrder("one", "two", "three")))
+                    .andExpect(MockMvcResultMatchers.jsonPath("titles").value(Matchers.containsInAnyOrder("one", "two", "three")))
                     .andDo(MockMvcResultHandlers.print())
             ;
         }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void testingAddGenre() {
+        Genre genre = new Genre(0,"I don't know");
+        try {
+            mockMvc.perform(post("/genres")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(new ObjectMapper().writeValueAsString(genre)))
+                    .andExpect(status().isOk())
+                    .andDo(MockMvcResultHandlers.print());
+        } catch (GenreNotFoundException d) {
+            d.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void testingDeleteGenreById() {
+        try {
+            BDDMockito.given(genreService.findById(ArgumentMatchers.anyInt()))
+                    .willReturn(new Genre(999, "Category To Delete"));
+
+            mockMvc.perform(MockMvcRequestBuilders
+                    .delete("/genres/999")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isNoContent())
+                    .andDo(MockMvcResultHandlers.print());
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
