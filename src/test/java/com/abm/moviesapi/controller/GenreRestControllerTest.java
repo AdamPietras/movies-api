@@ -70,7 +70,7 @@ class GenreRestControllerTest {
     }
 
     @Test
-    void testingIfGetGenreByItId() {
+    void testingIfGetMoviesByGenreId() {
         try {
             List<String> titles = Arrays.asList("one", "two", "three");
 

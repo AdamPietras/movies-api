@@ -1,14 +1,20 @@
 package com.abm.moviesapi.controller;
 
 import com.abm.moviesapi.entity.Director;
+import com.abm.moviesapi.entity.Genre;
+import com.abm.moviesapi.exceptions.CustomGenreExeption.GenreNotFoundException;
 import com.abm.moviesapi.service.DirectorService;
 import com.abm.moviesapi.service.GenreService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -61,11 +67,43 @@ class DirectorRestControllerTest {
     }
 
     @Test
-    void directorDTO() {
+    void testingIfGetMoviesByDirectorId() {
+        try {
+            List<String> titles = Arrays.asList("one", "two", "three");
+
+            BDDMockito.given(directorService.getMoviesByDirector(ArgumentMatchers.anyInt()))
+                    .willReturn(titles);
+            BDDMockito.given(directorService.findById(ArgumentMatchers.anyInt()))
+                    .willReturn(new Director(1, "Test Director Name"));
+
+            mockMvc.perform(MockMvcRequestBuilders.get("/directors/1"))
+                    .andExpect(MockMvcResultMatchers.status().isOk())
+                    .andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
+                    .andExpect(MockMvcResultMatchers.jsonPath("directorName").value("Test Director Name"))
+                    .andExpect(MockMvcResultMatchers.jsonPath("titles").isArray())
+                    .andExpect(MockMvcResultMatchers.jsonPath("titles").value(Matchers.containsInAnyOrder("one", "two", "three")))
+                    .andDo(MockMvcResultHandlers.print())
+            ;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Test
-    void addDirector() {
+    void testingAddDirector() {
+        Director director = new Director(1, "Test Director Name");
+        try {
+            mockMvc.perform(post("/directors")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(new ObjectMapper().writeValueAsString(director)))
+                    .andExpect(status().isOk())
+                    .andDo(MockMvcResultHandlers.print());
+        } catch (GenreNotFoundException d) {
+            d.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -74,5 +112,18 @@ class DirectorRestControllerTest {
 
     @Test
     void deleteDirector() {
+        try {
+            BDDMockito.given(directorService.findById(ArgumentMatchers.anyInt()))
+                    .willReturn(new Director(999, "Director To Delete"));
+
+            mockMvc.perform(MockMvcRequestBuilders
+                    .delete("/directors/999")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isNoContent())
+                    .andDo(MockMvcResultHandlers.print());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
