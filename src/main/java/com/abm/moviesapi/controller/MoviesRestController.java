@@ -29,7 +29,7 @@ public class MoviesRestController {
     @GetMapping("/movies/{movieId}")
     public Movie getMovie(@PathVariable int movieId) {
         Movie movie = movieService.findById(movieId);
-        if (movie.getId() < 0 || movie.getId() == 0){
+        if (movie.getId() <= 0 || movie.getId() > movieService.findAll().size()){
             throw new MovieNotFoundException();
         }
         return movie;
