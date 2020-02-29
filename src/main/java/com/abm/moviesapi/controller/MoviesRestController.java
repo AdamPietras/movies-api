@@ -45,7 +45,7 @@ public class MoviesRestController {
 
     @PutMapping("/movies")
     public Movie updateMovie(@RequestBody Movie movie){
-        if (movie.getId() <= 0){
+        if (movie.getId() <= 0 || movie.getId() > movieService.findAll().size()){
             throw new MovieNotFoundException();
         }
         movieService.save(movie);
@@ -56,7 +56,7 @@ public class MoviesRestController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public HttpStatus deleteMovie(@PathVariable int id){
         Movie movie = movieService.findById(id);
-        if (movie.getId()<=0){
+        if (movie.getId() <= 0 || movie.getId() > movieService.findAll().size()){
             throw new MovieNotFoundException();
         }
         movieService.deleteById(id);
