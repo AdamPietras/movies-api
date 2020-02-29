@@ -9,5 +9,7 @@ public interface DirectorService {
     public List<Director> findAll();
     public Director findById(int id) throws Exception;
     public void save(Director director) throws Exception;
-    public void deleteById(int id);
+    public void deleteById(int id) throws Exception;
+
+    List<String> getMoviesByDirector(int genreId);
 }

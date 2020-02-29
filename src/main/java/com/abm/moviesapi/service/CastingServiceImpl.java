@@ -1,7 +1,7 @@
 package com.abm.moviesapi.service;
 
 import com.abm.moviesapi.entity.Casting;
-import com.abm.moviesapi.entity.Movie;
+import com.abm.moviesapi.exceptions.CustomCastingException.CastingNotFoundException;
 import com.abm.moviesapi.repository.CastingRepository;
 import com.abm.moviesapi.repository.DirectorRepository;
 import com.abm.moviesapi.repository.GenreRepository;
@@ -13,7 +13,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CastingServiceImpl implements CastingService {
@@ -41,8 +40,8 @@ public class CastingServiceImpl implements CastingService {
     }
 
     @Override
-    public Casting findById(int id) throws Exception {
-        return castingRepository.findById(id).orElseThrow(()-> new Exception("Casting with id " + castingRepository.findById(id) + "not found"));
+    public Casting findById(int id) throws CastingNotFoundException {
+        return castingRepository.findById(id).orElseThrow(()-> new CastingNotFoundException("Casting with id " + castingRepository.findById(id) + " not found"));
     }
 
     @Override
@@ -51,8 +50,9 @@ public class CastingServiceImpl implements CastingService {
     }
 
     @Override
-    public void deleteById(int id) {
-        castingRepository.deleteById(id);
+    public void deleteById(int id) throws CastingNotFoundException {
+        Casting casting = castingRepository.findById(id).orElseThrow(()-> new CastingNotFoundException("Casting with id " + id + " not found"));
+        castingRepository.deleteById(casting.getId());
     }
 
     @Override

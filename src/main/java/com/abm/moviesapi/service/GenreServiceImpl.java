@@ -2,6 +2,8 @@ package com.abm.moviesapi.service;
 
 import com.abm.moviesapi.entity.Genre;
 import com.abm.moviesapi.entity.Movie;
+import com.abm.moviesapi.exceptions.CustomCastingException.CastingNotFoundException;
+import com.abm.moviesapi.exceptions.CustomGenreExeption.GenreNotFoundException;
 import com.abm.moviesapi.repository.CastingRepository;
 import com.abm.moviesapi.repository.DirectorRepository;
 import com.abm.moviesapi.repository.GenreRepository;
@@ -41,24 +43,19 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public Genre findById(int id) {
-        Optional<Genre> result = genreRepository.findById(id);
-        Genre genre = null;
-        if (result.isPresent())
-            genre = result.get();
-        else
-            throw new RuntimeException("Did not find genre with id" + id);
-        return genre;
+    public Genre findById(int id) throws GenreNotFoundException {
+        return genreRepository.findById(id).orElseThrow(()-> new GenreNotFoundException("Genre with id " + id + " not found"));
     }
 
     @Override
     public void save(Genre genre) throws Exception {
-//TODO
+        genreRepository.save(genre);
     }
 
     @Override
-    public void deleteById(int id) {
-        genreRepository.deleteById(id);
+    public void deleteById(int id) throws GenreNotFoundException{
+        Genre genre = genreRepository.findById(id).orElseThrow(()-> new GenreNotFoundException("Genre with id " + id + " not found"));
+        genreRepository.deleteById(genre.getId());
     }
 
     @Override
