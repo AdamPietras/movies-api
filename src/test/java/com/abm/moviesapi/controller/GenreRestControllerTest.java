@@ -4,6 +4,7 @@ import com.abm.moviesapi.dto.GenreDTO;
 import com.abm.moviesapi.entity.Genre;
 import com.abm.moviesapi.service.GenreService;
 import com.abm.moviesapi.service.MovieService;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
@@ -77,7 +78,7 @@ class GenreRestControllerTest {
                     .andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
                     .andExpect(MockMvcResultMatchers.jsonPath("genreName").value("Comedy"))
                     .andExpect(MockMvcResultMatchers.jsonPath("titles").isArray())
-//                    .andExpect(MockMvcResultMatchers.jsonPath("titles").value(titles))
+                    .andExpect(MockMvcResultMatchers.jsonPath("titles", Matchers.containsInAnyOrder("one", "two", "three")))
                     .andDo(MockMvcResultHandlers.print())
             ;
         }catch (Exception e){
