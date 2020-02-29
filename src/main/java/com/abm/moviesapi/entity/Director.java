@@ -17,6 +17,11 @@ public class Director {
         this.directorName=directorName;
     }
 
+    public Director(int id, String directorName) {
+        this.id = id;
+        this.directorName=directorName;
+    }
+
     public int getId() {
         return id;
     }

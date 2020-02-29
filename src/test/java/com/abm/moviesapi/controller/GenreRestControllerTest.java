@@ -36,7 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(GenreRestController.class)
 class GenreRestControllerTest {
 
-
     @Autowired
     private MockMvc mockMvc;
 
@@ -61,7 +60,7 @@ class GenreRestControllerTest {
                     .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
                     .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Comedy"))
                     .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(2))
-                    .andExpect(MockMvcResultMatchers.jsonPath("$[2].name").value("Horror"))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[1].name").value("Horror"))
                     .andDo(MockMvcResultHandlers.print())
 
             ;
