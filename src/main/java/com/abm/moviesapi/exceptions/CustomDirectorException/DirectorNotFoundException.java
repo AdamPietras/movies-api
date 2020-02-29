@@ -1,6 +1,8 @@
 package com.abm.moviesapi.exceptions.CustomDirectorException;
 
-public class DirectorNotFoundException extends RuntimeException{
+import com.abm.moviesapi.exceptions.CustomResourceNotFoundException.ResourceNotFoundException;
+
+public class DirectorNotFoundException extends ResourceNotFoundException {
     public DirectorNotFoundException() {
         super();
     }

@@ -1,6 +1,8 @@
 package com.abm.moviesapi.exceptions.CustomMovieException;
 
-public class MovieNotFoundException extends RuntimeException {
+import com.abm.moviesapi.exceptions.CustomResourceNotFoundException.ResourceNotFoundException;
+
+public class MovieNotFoundException extends ResourceNotFoundException {
     public MovieNotFoundException() {
         super();
     }
