@@ -1,6 +1,6 @@
 package com.abm.moviesapi.exceptions.CustomCastingException;
 
-public class CastingNotFoundException extends RuntimeException{
+public class CastingNotFoundException extends RuntimeException {
     public CastingNotFoundException() {
         super();
     }

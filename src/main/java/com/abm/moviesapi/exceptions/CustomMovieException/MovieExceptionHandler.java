@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class MovieExceptionHandler  {
 
-    //Add an exception handler for MovieNotFoundException
+    //Add an exception handler for ResourceNotFoundException
 
     @ExceptionHandler
     public ResponseEntity<MovieErrorResponse> handleException (MovieNotFoundException exception){

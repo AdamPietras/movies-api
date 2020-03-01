@@ -1,13 +1,9 @@
 package com.abm.moviesapi.controller;
 
-import com.abm.moviesapi.dto.CastingDTO;
 import com.abm.moviesapi.dto.GenreDTO;
-import com.abm.moviesapi.entity.Casting;
-import com.abm.moviesapi.entity.Director;
 import com.abm.moviesapi.entity.Genre;
-import com.abm.moviesapi.entity.Movie;
+import com.abm.moviesapi.exceptions.CustomGenreExeption.GenreNotFoundException;
 import com.abm.moviesapi.service.GenreService;
-import com.abm.moviesapi.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -33,8 +29,10 @@ public class GenreRestController {
 
     //GET (all movies for genre id)
     @GetMapping("/genres/{genreId}")
-    public GenreDTO getGenre(@PathVariable int genreId) throws Exception {
-
+    public GenreDTO getGenre(@PathVariable int genreId){
+        if (genreId <= 0 || genreId > genreService.findAll().size()){
+            throw new GenreNotFoundException();
+        }
         Genre genre = genreService.findById(genreId);
         GenreDTO genreDTO = new GenreDTO(genre.getId(), genre.getName(), genreService.getMoviesByGenre(genreId));
         return genreDTO;
@@ -42,7 +40,7 @@ public class GenreRestController {
 
     //POST (add genres)
     @PostMapping(value = "/genres", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Genre addGenre(@RequestBody Genre genre) throws Exception {
+    public Genre addGenre(@RequestBody Genre genre){
         genre.setId(0);
         genreService.save(genre);
         return genre;
@@ -50,7 +48,10 @@ public class GenreRestController {
 
     //PUT (update director)
     @PutMapping("/genres")
-    public Genre updateGenre(@RequestBody Genre genre) throws Exception {
+    public Genre updateGenre(@RequestBody Genre genre){
+        if (genre.getId() <= 0 || genre.getId() > genreService.findAll().size()){
+            throw new GenreNotFoundException();
+        }
         genreService.save(genre);
         return genre;
         //TODO
@@ -59,7 +60,10 @@ public class GenreRestController {
     //DELETE (delete Director)
     @DeleteMapping("/genres/{genreId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public HttpStatus deleteGenre(@PathVariable int genreId) throws Exception {
+    public HttpStatus deleteGenre(@PathVariable int genreId){
+        if (genreId <= 0 || genreId > genreService.findAll().size()){
+            throw new GenreNotFoundException();
+        }
         genreService.deleteById(genreId);
         return HttpStatus.NO_CONTENT;
     }
