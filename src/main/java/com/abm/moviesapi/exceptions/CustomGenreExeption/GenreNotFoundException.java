@@ -1,8 +1,6 @@
 package com.abm.moviesapi.exceptions.CustomGenreExeption;
 
-import com.abm.moviesapi.exceptions.CustomResourceNotFoundException.ResourceNotFoundException;
-
-public class GenreNotFoundException extends ResourceNotFoundException {
+public class GenreNotFoundException extends RuntimeException {
     public GenreNotFoundException() {
         super();
     }

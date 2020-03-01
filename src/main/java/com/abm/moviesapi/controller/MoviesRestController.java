@@ -26,6 +26,7 @@ public class MoviesRestController {
         return movieService.findAll();
     }
     //GET (movie by id)
+
     @GetMapping("/movies/{movieId}")
     public Movie getMovie(@PathVariable int movieId) {
         Movie movie = movieService.findById(movieId);

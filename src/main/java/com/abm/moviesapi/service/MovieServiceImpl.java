@@ -4,7 +4,6 @@ import com.abm.moviesapi.entity.Casting;
 import com.abm.moviesapi.entity.Director;
 import com.abm.moviesapi.entity.Genre;
 import com.abm.moviesapi.entity.Movie;
-import com.abm.moviesapi.exceptions.CustomResourceNotFoundException.ResourceNotFoundException;
 import com.abm.moviesapi.repository.CastingRepository;
 import com.abm.moviesapi.repository.DirectorRepository;
 import com.abm.moviesapi.repository.GenreRepository;
@@ -38,13 +37,11 @@ public class MovieServiceImpl implements MovieService {
     }
     @Override
     public Movie findById(int id) {
-        Movie movie = null;
-        movie = movieRepository.findById(id).get();
-        return movie;
+        return movieRepository.findById(id).get();
     }
 
 @Override
-    public void save(Movie movie) throws ResourceNotFoundException {
+    public void save(Movie movie) {
             Director director = directorRepository.findByDirectorName(movie.getDirector().getDirectorName()).get();
             movie.setDirector(director);
 

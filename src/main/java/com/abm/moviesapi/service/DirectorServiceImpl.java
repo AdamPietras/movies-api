@@ -1,7 +1,6 @@
 package com.abm.moviesapi.service;
 
 import com.abm.moviesapi.entity.Director;
-import com.abm.moviesapi.exceptions.CustomDirectorException.DirectorNotFoundException;
 import com.abm.moviesapi.repository.CastingRepository;
 import com.abm.moviesapi.repository.DirectorRepository;
 import com.abm.moviesapi.repository.GenreRepository;
@@ -39,19 +38,18 @@ public class DirectorServiceImpl implements DirectorService {
     }
 
     @Override
-    public Director findById(int id) throws Exception {
-        return directorRepository.findById(id).orElseThrow(()->new Exception("Director with id" + id + " not found"));
+    public Director findById(int id){
+        return directorRepository.findById(id).get();
     }
 
     @Override
-    public void save(Director director) throws Exception {
+    public void save(Director director){
         directorRepository.save(director);
     }
 
     @Override
-    public void deleteById(int id) throws Exception {
-        Director director = directorRepository.findById(id).orElseThrow(()-> new Exception("Director with id" + id + " not found"));
-        directorRepository.deleteById(director.getId());
+    public void deleteById(int id){
+        directorRepository.deleteById(id);
     }
 
     @Override
