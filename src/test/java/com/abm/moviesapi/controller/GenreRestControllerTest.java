@@ -1,9 +1,7 @@
 package com.abm.moviesapi.controller;
 
-import com.abm.moviesapi.dto.GenreDTO;
 import com.abm.moviesapi.entity.Genre;
 import com.abm.moviesapi.service.GenreService;
-import com.abm.moviesapi.service.MovieService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
@@ -19,10 +17,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(GenreRestController.class)

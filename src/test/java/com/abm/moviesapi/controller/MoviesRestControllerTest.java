@@ -2,7 +2,6 @@ package com.abm.moviesapi.controller;
 
 import com.abm.moviesapi.entity.Movie;
 import com.abm.moviesapi.exceptions.CustomMovieException.MovieNotFoundException;
-import com.abm.moviesapi.service.MovieService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
