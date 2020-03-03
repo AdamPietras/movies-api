@@ -12,6 +12,7 @@ import com.abm.moviesapi.repository.CastingRepository;
 import com.abm.moviesapi.repository.DirectorRepository;
 import com.abm.moviesapi.repository.GenreRepository;
 import com.abm.moviesapi.repository.MovieRepository;
+import javafx.scene.shape.MoveTo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,9 +42,7 @@ public class MovieServiceImpl implements MovieService {
     }
     @Override
     public Movie findById(int id) {
-        Movie movie = null;
-        movie = movieRepository.findById(id).orElseThrow(()->new MovieNotFoundException("Movie with id" + id + "not found"));
-        return movie;
+        return movieRepository.findById(id).orElseThrow(()->new MovieNotFoundException("Movie with id" + id + "not found"));
     }
 
     @Override
@@ -67,7 +66,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public void deleteById(int id) throws MovieNotFoundException {
-        movieRepository.deleteById(id);
+    public void deleteById(int id){
+        Movie movie = movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException("Movie with id " + id + " NOT found"));
+        movieRepository.deleteById(movie.getId());
     }
 }

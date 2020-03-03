@@ -48,7 +48,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public void save(Genre genre) throws Exception {
+    public void save(Genre genre) {
         genreRepository.save(genre);
     }
 

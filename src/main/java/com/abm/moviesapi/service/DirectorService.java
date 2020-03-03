@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface DirectorService {
     public List<Director> findAll();
-    public Director findById(int id) throws Exception;
-    public void save(Director director) throws Exception;
-    public void deleteById(int id) throws Exception;
+    public Director findById(int id);
+    public void save(Director director);
+    public void deleteById(int id);
 
     List<String> getMoviesByDirector(int genreId);
 }

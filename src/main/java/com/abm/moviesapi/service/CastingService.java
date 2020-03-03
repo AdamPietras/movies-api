@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CastingService {
     public List<Casting> findAll();
-    public Casting findById(int id) throws Exception;
+    public Casting findById(int id);
     public void save(Casting casting);
     public void deleteById(int id);
 

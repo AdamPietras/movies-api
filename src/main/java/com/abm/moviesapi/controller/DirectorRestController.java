@@ -37,7 +37,7 @@ public class DirectorRestController {
 
     //GET (all movies for director id)
     @GetMapping("/directors/{directorId}")
-    public DirectorDTO directorDTO(@PathVariable int directorId) throws Exception {
+    public DirectorDTO directorDTO(@PathVariable int directorId){
 
         Director director = directorService.findById(directorId);
         DirectorDTO directorDTO= new DirectorDTO(director.getId(), director.getDirectorName(), directorService.getMoviesByDirector(directorId));
@@ -46,7 +46,7 @@ public class DirectorRestController {
 
     //POST (add director)
     @PostMapping(value = "/directors", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Director addDirector(@RequestBody Director director) throws Exception {
+    public Director addDirector(@RequestBody Director director){
         director.setId(0);
         directorService.save(director);
         return director;
@@ -54,7 +54,7 @@ public class DirectorRestController {
 
     //PUT (update director)
     @PutMapping("/directors")
-    public Director updateDirector(@RequestBody Director director) throws Exception {
+    public Director updateDirector(@RequestBody Director director){
         directorService.save(director);
         return director;
         //TODO
@@ -63,7 +63,7 @@ public class DirectorRestController {
     //DELETE (delete Director)
     @DeleteMapping("/directors/{directorId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public HttpStatus deleteDirector(@PathVariable int directorId) throws Exception {
+    public HttpStatus deleteDirector(@PathVariable int directorId){
         directorService.deleteById(directorId);
         return HttpStatus.NO_CONTENT;
     }

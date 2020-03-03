@@ -25,7 +25,7 @@ public class CastingRestController {
     }
 
     @GetMapping("/casting/{castingId}")
-    public CastingDTO getCasting(@PathVariable int castingId) throws Exception {
+    public CastingDTO getCasting(@PathVariable int castingId){
 
         Casting casting = castingService.findById(castingId);
         CastingDTO castingDTO = new CastingDTO(casting.getId(), casting.getActorName(), castingService.getMoviesByCasting(castingId));
@@ -33,14 +33,14 @@ public class CastingRestController {
     }
 
     @PostMapping(value = "/casting", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Casting addCasting(@RequestBody Casting casting) throws Exception {
+    public Casting addCasting(@RequestBody Casting casting){
         casting.setId(0);
         castingService.save(casting);
         return casting;
     }
 
     @PutMapping("/casting")
-    public Casting updateCasting(@RequestBody Casting casting) throws Exception {
+    public Casting updateCasting(@RequestBody Casting casting){
         castingService.save(casting);
         return casting;
     }

@@ -42,7 +42,7 @@ public class GenreRestController {
 
     //POST (add genres)
     @PostMapping(value = "/genres", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Genre addGenre(@RequestBody Genre genre) throws Exception {
+    public Genre addGenre(@RequestBody Genre genre){
         genre.setId(0);
         genreService.save(genre);
         return genre;
@@ -50,7 +50,7 @@ public class GenreRestController {
 
     //PUT (update director)
     @PutMapping("/genres")
-    public Genre updateGenre(@RequestBody Genre genre) throws Exception {
+    public Genre updateGenre(@RequestBody Genre genre){
         genreService.save(genre);
         return genre;
         //TODO
@@ -59,7 +59,7 @@ public class GenreRestController {
     //DELETE (delete Director)
     @DeleteMapping("/genres/{genreId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public HttpStatus deleteGenre(@PathVariable int genreId) throws Exception {
+    public HttpStatus deleteGenre(@PathVariable int genreId){
         genreService.deleteById(genreId);
         return HttpStatus.NO_CONTENT;
     }

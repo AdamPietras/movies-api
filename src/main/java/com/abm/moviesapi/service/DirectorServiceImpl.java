@@ -39,18 +39,18 @@ public class DirectorServiceImpl implements DirectorService {
     }
 
     @Override
-    public Director findById(int id) throws Exception {
-        return directorRepository.findById(id).orElseThrow(()->new Exception("Director with id" + id + " not found"));
+    public Director findById(int id){
+        return directorRepository.findById(id).orElseThrow(()->new DirectorNotFoundException("Director with id" + id + " not found"));
     }
 
     @Override
-    public void save(Director director) throws Exception {
+    public void save(Director director) {
         directorRepository.save(director);
     }
 
     @Override
-    public void deleteById(int id) throws Exception {
-        Director director = directorRepository.findById(id).orElseThrow(()-> new Exception("Director with id" + id + " not found"));
+    public void deleteById(int id){
+        Director director = directorRepository.findById(id).orElseThrow(()-> new DirectorNotFoundException("Director with id" + id + " not found"));
         directorRepository.deleteById(director.getId());
     }
 
