@@ -55,6 +55,7 @@ public class CastingServiceImpl implements CastingService {
         castingRepository.deleteById(casting.getId());
     }
 
+
     @Override
     public List<String> getMoviesByCasting(int castingId){
         Query query = entityManager.createNativeQuery("SELECT title FROM movie_castings JOIN movie m on movie_castings.movie_id = m.id JOIN casting c on movie_castings.castings_id = c.id where castings_id = ?");
